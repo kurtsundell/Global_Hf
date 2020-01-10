@@ -13,13 +13,10 @@ if ismac == 1
 	fullpathname = char(strcat(pathname, '/', filename));
 end
 
-% Percent contour 
-conf = 95;
-
 % Range of 2D data
 xmin = 0;
-xmax = 4000;
-ymin = -45;
+xmax = 4400;
+ymin = -41;
 ymax = 20;
 
 % kernel bandwidths
@@ -33,7 +30,7 @@ gridspc = 2^9;
 [numbers text, data] = xlsread(fullpathname);
 numbers = num2cell(numbers);
 
-% Fileter out any data that are not pairs of numbers
+% Filter out any data that are not pairs of numbers
 for i = 1:size(numbers,1)
 	for j = 1:size(numbers,2)
 		if cellfun('isempty', numbers(i,j)) == 0
@@ -78,9 +75,7 @@ for k = 1:N
 end
 
 % jet colormap that clips 0 values
-cmap = [1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0.0625	0.125	0.1875	0.25	0.3125	0.375	0.4375	0.5	0.5625	0.625	0.6875	0.75	0.8125	0.875	0.9375	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	0.9375	0.875	0.8125	0.75	0.6875	0.625	0.5625	0.5
-1	0	0	0	0	0	0	0	0.0625	0.125	0.1875	0.25	0.3125	0.375	0.4375	0.5	0.5625	0.625	0.6875	0.75	0.8125	0.875	0.9375	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	0.9375	0.875	0.8125	0.75	0.6875	0.625	0.5625	0.5	0.4375	0.375	0.3125	0.25	0.1875	0.125	0.0625	0	0	0	0	0	0	0	0	0
-1	0.625	0.6875	0.75	0.8125	0.875	0.9375	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	0.9375	0.875	0.8125	0.75	0.6875	0.625	0.5625	0.5	0.4375	0.375	0.3125	0.25	0.1875	0.125	0.0625	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0]';
+cmap =[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.0400000000000000,0.0800000000000000,0.120000000000000,0.160000000000000,0.200000000000000,0.240000000000000,0.280000000000000,0.320000000000000,0.360000000000000,0.400000000000000,0.440000000000000,0.480000000000000,0.520000000000000,0.560000000000000,0.600000000000000,0.640000000000000,0.680000000000000,0.720000000000000,0.760000000000000,0.800000000000000,0.840000000000000,0.880000000000000,0.920000000000000,0.960000000000000,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0.960000000000000,0.920000000000000,0.880000000000000,0.840000000000000,0.800000000000000,0.760000000000000,0.720000000000000,0.680000000000000,0.640000000000000,0.600000000000000,0.560000000000000,0.520000000000000;1,0,0,0,0,0,0,0,0,0,0,0,0,0.0400000000000000,0.0800000000000000,0.120000000000000,0.160000000000000,0.200000000000000,0.240000000000000,0.280000000000000,0.320000000000000,0.360000000000000,0.400000000000000,0.440000000000000,0.480000000000000,0.520000000000000,0.560000000000000,0.600000000000000,0.640000000000000,0.680000000000000,0.720000000000000,0.760000000000000,0.800000000000000,0.840000000000000,0.880000000000000,0.920000000000000,0.960000000000000,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0.960000000000000,0.920000000000000,0.880000000000000,0.840000000000000,0.800000000000000,0.760000000000000,0.720000000000000,0.680000000000000,0.640000000000000,0.600000000000000,0.560000000000000,0.520000000000000,0.480000000000000,0.440000000000000,0.400000000000000,0.360000000000000,0.320000000000000,0.280000000000000,0.240000000000000,0.200000000000000,0.160000000000000,0.120000000000000,0.0800000000000000,0.0400000000000000,0,0,0,0,0,0,0,0,0,0,0,0,0;1,0.560000000000000,0.600000000000000,0.640000000000000,0.680000000000000,0.720000000000000,0.760000000000000,0.800000000000000,0.840000000000000,0.880000000000000,0.920000000000000,0.960000000000000,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0.960000000000000,0.920000000000000,0.880000000000000,0.840000000000000,0.800000000000000,0.760000000000000,0.720000000000000,0.680000000000000,0.640000000000000,0.600000000000000,0.560000000000000,0.520000000000000,0.480000000000000,0.440000000000000,0.400000000000000,0.360000000000000,0.320000000000000,0.280000000000000,0.240000000000000,0.200000000000000,0.160000000000000,0.120000000000000,0.0800000000000000,0.0400000000000000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]';
 
 % Ask user if they want to plot all input sample bivariate KDEs?
 while(1)
@@ -99,6 +94,30 @@ while(1)
 	break
 end
 
+
+% Ask user if they want to plot all input sample bivariate KDE contours?
+while(1)
+	choice = menu('Plot and save sample contours?','Yes','No');
+	if choice==1 
+		for i = 1:N
+			FIG = figure;
+			max_density = max(max(density1(:,:,i)));
+			max_density_conf = max_density - max_density*99*.01;
+			contour3(X1,Y1,density1(:,:,i),[max_density_conf max_density_conf],'k', 'LineWidth', 4);
+			view(2)
+			grid on
+			axis([xmin xmax ymin ymax])
+			[file,path] = uiputfile('*.eps','Save file');
+			print(FIG,'-depsc','-painters',[path file]);
+			epsclean([path file]); 
+		end
+	end
+	break
+end
+
+
+
+
 % Calculate intersample 2D Similarity
 %for i = 1:(N*N-N)/2 % number of comparisons
 count = 1;
@@ -115,6 +134,13 @@ for j = 1:N
 		end
 	end
 end
+
+
+
+
+
+
+
 
 % Ask user if they want to plot all of the Similarity comparison maps
 while(1)
@@ -133,14 +159,235 @@ while(1)
 	break
 end
 
-S = sum(Similarity_Maps,3);
+for i = 1:N
+	S(i,1) = sum(Similarity_Maps(:,:,i),'all');
+end
+
+S_Map = sum(Similarity_Maps,3);
 
 % Ask user if they want to plot the Similarity sum 
 while(1)
 	choice = menu('Plot the sum of the comparisons?', 'Yes','No');
 	if choice==1 
 		figure
-		surf(X1,Y1,S);
+		surf(X1,Y1,S_Map);
+		colormap(cmap)
+		shading interp
+		view(2)
+		title('Similarity Sum')
+		xlabel('Age (Ma)')
+		ylabel('Similarity Sum')
+		axis([xmin xmax ymin ymax])
+	end
+	break
+end
+
+S_time = sum(S_Map,1);
+
+for i = 1:((N*N)-N)/2
+	S_time_ind(i,:) = sum(Similarity_Maps(:,:,i),1);
+end
+
+S_time_x = xmin:(xmax-xmin)/(length(density1(:,:,1))-1):xmax;
+
+S_time_ind_sum = sum(S_time_ind);
+
+
+color = jet(((N*N)-N)/2);
+figure 
+hold on
+for i = 1:((N*N)-N)/2
+	plot(S_time_x,S_time_ind(i,:),'Color',color(i,:),'LineWidth',4)
+end
+legend(name_comp)
+xlim([xmin xmax])
+xlabel('Age (Ma)')
+ylabel('Similarity')
+
+
+
+color = jet(((N*N)-N)/2);
+figure 
+hold on
+for i = 1:((N*N)-N)/2
+	plot(S_time_x,S_time_ind(i,:),'Color',color(i,:),'LineWidth',4)
+end
+plot(S_time_x,S_time_ind_sum,'Color','k','LineWidth',5)
+legend([name_comp;{'Sum of all comparisons'}])
+axis([xmin xmax 0 max(S_time)])
+xlabel('Age (Ma)')
+ylabel('Similarity')
+
+
+while(1)
+	choice = menu('Plot the sum of the comparisons?', 'Yes','No');
+	if choice==1 
+		figure
+		hold on
+		rectangle('Position',[200,-60,100,80],'FaceColor','y','EdgeColor','w') % Pangea
+		rectangle('Position',[480,-60,190,80],'FaceColor','y','EdgeColor','w') % Gondwana
+		rectangle('Position',[900,-60,400,80],'FaceColor','y','EdgeColor','w') % Rodinia
+		rectangle('Position',[1450,-60,525,80],'FaceColor','y','EdgeColor','w') % Columbia/Nuna
+		rectangle('Position',[2400,-60,300,80],'FaceColor','y','EdgeColor','w') % Kenorland?
+		plot(S_time_x, S_time, 'LineWidth', 4, 'Color', 'k')
+		xlabel('Age Ma')
+		ylabel('Sum of all comparisons')
+		axis([xmin xmax 0 max(S_time)])
+	end
+	break
+end
+
+% Binning routine follows
+bins = 45;
+
+edges = 0:(xmax-xmin)/bins:xmax;
+
+for i = 1:N
+	tmp = discretize(nonzeros(data1(:,i*2-1)),edges);
+	Disc(i,1) = {tmp};
+	clear tmp
+end
+
+% add up how many data points at each bin
+for j = 1:N
+	tmp = Disc{j,1};
+	for i = 1:bins
+		Disc_Bins(i,j) = sum(tmp==i);
+	end
+	clear tmp
+end
+
+Disc_Bins_Sum = sum(Disc_Bins,2);
+
+Disc_Bins_Perc = Disc_Bins./repmat(Disc_Bins_Sum,1,N).*100;
+
+disc = Disc_Bins_Perc/100;
+
+
+
+
+for k = 1:N
+	data2 = data1(:,k*2-1:k*2);
+	data2 = data2(any(data2 ~= 0,2),:);
+	[bandwidth1,density1(:,:,k),X1,Y1] = kde2d_set_kernel(data2, gridspc, MIN_XY, MAX_XY, bandwidth_x, bandwidth_y);
+	density1(:,:,k) = density1(:,:,k)./sum(sum(density1(:,:,k)));
+	clear data2
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+for i = 1:N
+	Disc_Bins_Cumu(:,i) = sum(Disc_Bins_Perc(:,1:i),2);
+end
+
+Xh = 0:(xmax-xmin)/(bins-1):xmax;
+
+while(1)
+	choice = menu('Plot data binned by sample?', 'Yes','No');
+	if choice==1 
+		figure 
+		hold on 
+		c = colormap(jet(N));
+		for i = N:-1:1
+			patch([Xh fliplr(Xh)], [zeros(1,bins) fliplr(Disc_Bins_Cumu(:,i)')], c(i,:))
+		end
+		axis([xmin xmax 0 100])
+		%set(gca, 'XDir','reverse')
+		legend(flipud(Name))
+	end
+	break
+end
+
+
+%{
+
+for i = 1:N
+	density1_scaled(:,:,i) = density1(:,:,1).*disc(:,i)';
+end
+
+
+
+
+% Ask user if they want to plot all input sample bivariate KDEs?
+while(1)
+	choice = menu('Plot all samples SCALED?','Yes','No');
+	if choice==1 
+		for i = 1:N
+			figure
+			surf(X1,Y1,density1_scaled(:,:,i));
+			colormap(cmap)
+			shading interp
+			view(2)
+			title(Name(i,1))
+			axis([xmin xmax ymin ymax])
+		end
+	end
+	break
+end
+
+% Calculate intersample 2D Similarity SCALED
+%for i = 1:(N*N-N)/2 % number of comparisons
+count = 1;
+for j = 1:N
+	for k = 1:N
+		if j > k
+			for m = 1:size(density1_scaled,1)
+				for n = 1:size(density1_scaled,2)
+					Similarity_Maps_Scaled(m,n,count) = sqrt(density1_scaled(m,n,j).*density1_scaled(m,n,k)); % Similarity map
+				end
+			end
+			%name_comp(count,1) = strcat(Name(j,1), {' vs '}, Name(k,1));
+			count = count + 1;
+		end
+	end
+end
+
+% Ask user if they want to plot all of the Similarity comparison maps
+while(1)
+	choice = menu('Plot all comparisons SCALED?', 'Yes','No');
+	if choice==1 
+		for i = 1:(N*N-N)/2 % number of comparisons
+			figure
+			surf(X1,Y1,Similarity_Maps_Scaled(:,:,i));
+			colormap(cmap)
+			shading interp
+			view(2)
+			title(name_comp(i,1))
+			axis([xmin xmax ymin ymax])
+		end
+	end
+	break
+end
+
+for i = 1:N
+	S_scaled(i,1) = sum(Similarity_Maps_Scaled(:,:,i),'all');
+end
+
+S_Map_scaled = sum(Similarity_Maps_Scaled,3);
+
+% Ask user if they want to plot the Similarity sum 
+while(1)
+	choice = menu('Plot the sum of the comparisons SCALED?', 'Yes','No');
+	if choice==1 
+		figure
+		surf(X1,Y1,S_Map_scaled);
 		colormap(cmap)
 		shading interp
 		view(2)
@@ -150,65 +397,21 @@ while(1)
 	break
 end
 
-%{
-% plot supercontinent timing, need reference for this
-figure
-hold on
-rectangle('Position',[200,-60,100,80],'FaceColor','y','EdgeColor','w') % Pangea
-rectangle('Position',[480,-60,190,80],'FaceColor','y','EdgeColor','w') % Gondwana
-rectangle('Position',[900,-60,400,80],'FaceColor','y','EdgeColor','w') % Rodinia
-rectangle('Position',[1450,-60,525,80],'FaceColor','y','EdgeColor','w') % Columbia/Nuna
-rectangle('Position',[2400,-60,300,80],'FaceColor','y','EdgeColor','w') % Kenorland?
-axis([xmin xmax ymin ymax])
-%}
 
 
 
-%{
-% Binning routine follows
-bins = 100;
-
-edges = 0:(xmax-xmin)/bins:xmax;
-
-AFRd = discretize(AFR(:,1),edges);
-AUSd = discretize(AUS(:,1),edges);
-EURd = discretize(EUR(:,1),edges);
-NAMd = discretize(NAM(:,1),edges);
-SAMd = discretize(SAM(:,1),edges);
-
-for i = 1:bins
-	AFRh(i,1) = sum(AFRd==i);
-	AUSh(i,1) = sum(AUSd==i);
-	EURh(i,1) = sum(EURd==i);
-	NAMh(i,1) = sum(NAMd==i);
-	SAMh(i,1) = sum(SAMd==i);
-end
 
 
-Hall = AFRh + EURh + NAMh + SAMh + AUSh;
 
-H1 = AFRh./Hall;
-H2 = AFRh./Hall + EURh./Hall;
-H3 = AFRh./Hall + EURh./Hall + NAMh./Hall;
-H4 = AFRh./Hall + EURh./Hall + NAMh./Hall + SAMh./Hall;
 
-Xh = 0:(xmax-xmin)/(bins-1):xmax;
 
-while(1)
-	choice = menu('Plot data binned by sample?', 'Yes','No');
-	if choice==1 
-		figure
-		hold on
-		patch([Xh fliplr(Xh)], [zeros(1,bins) fliplr(H2')], [69/255 35/255 125/255])
-		patch([Xh fliplr(Xh)], [H1' fliplr(H2')], [74/255 113/255 209/255])
-		patch([Xh fliplr(Xh)], [H2' fliplr(H3')], [83/255 176/255 179/255])
-		patch([Xh fliplr(Xh)], [H3' fliplr(H4')], [146/255 198/255 106/255])
-		patch([Xh fliplr(Xh)], [ones(1,bins) fliplr(H4')], [232/255 193/255 58/255])
-		axis([xmin,xmax,0,1])
-		set(gca, 'XDir','reverse')		
-	end
-	break
-end
+
+
+
+
+
+
+
 
 %}
 
@@ -216,7 +419,6 @@ end
 
 
 
-% Weighting for bias test of Similarity sum
 
 
 
