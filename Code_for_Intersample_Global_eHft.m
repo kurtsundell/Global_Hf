@@ -1,4 +1,5 @@
-% Two dimensional Similarity %
+% Supporting code for Sundell and Macdonald (submitted) Geology for 2D KDE
+% similarity comparison of global age-Hf data, or any other 2D data 
 
 clear all
 close all
@@ -94,7 +95,7 @@ while(1)
 	break
 end
 
-
+%{
 % Ask user if they want to plot all input sample bivariate KDE contours?
 while(1)
 	choice = menu('Plot and save sample contours?','Yes','No');
@@ -114,9 +115,7 @@ while(1)
 	end
 	break
 end
-
-
-
+%}
 
 % Calculate intersample 2D Similarity
 %for i = 1:(N*N-N)/2 % number of comparisons
@@ -134,13 +133,6 @@ for j = 1:N
 		end
 	end
 end
-
-
-
-
-
-
-
 
 % Ask user if they want to plot all of the Similarity comparison maps
 while(1)
@@ -188,47 +180,43 @@ for i = 1:((N*N)-N)/2
 	S_time_ind(i,:) = sum(Similarity_Maps(:,:,i),1);
 end
 
-S_time_x = xmin:(xmax-xmin)/(length(density1(:,:,1))-1):xmax;
-
-S_time_ind_sum = sum(S_time_ind);
-
-
-color = jet(((N*N)-N)/2);
-figure 
-hold on
-for i = 1:((N*N)-N)/2
-	plot(S_time_x,S_time_ind(i,:),'Color',color(i,:),'LineWidth',4)
-end
-legend(name_comp)
-xlim([xmin xmax])
-xlabel('Age (Ma)')
-ylabel('Similarity')
-
-
-
-color = jet(((N*N)-N)/2);
-figure 
-hold on
-for i = 1:((N*N)-N)/2
-	plot(S_time_x,S_time_ind(i,:),'Color',color(i,:),'LineWidth',4)
-end
-plot(S_time_x,S_time_ind_sum,'Color','k','LineWidth',5)
-legend([name_comp;{'Sum of all comparisons'}])
-axis([xmin xmax 0 max(S_time)])
-xlabel('Age (Ma)')
-ylabel('Similarity')
-
-
 while(1)
-	choice = menu('Plot the sum of the comparisons?', 'Yes','No');
+	choice = menu('Plot the sum of the comparisons and compared to supercontinent tenures?', 'Yes','No');
 	if choice==1 
+		S_time_x = xmin:(xmax-xmin)/(length(density1(:,:,1))-1):xmax;
+		S_time_ind_sum = sum(S_time_ind);
+		color = jet(((N*N)-N)/2);
+		
+		figure 
+		hold on
+		for i = 1:((N*N)-N)/2
+			plot(S_time_x,S_time_ind(i,:),'Color',color(i,:),'LineWidth',4)
+		end
+		legend(name_comp)
+		xlim([xmin xmax])
+		xlabel('Age (Ma)')
+		ylabel('Similarity')
+
+		color = jet(((N*N)-N)/2);
+		
+		figure 
+		hold on
+		for i = 1:((N*N)-N)/2
+			plot(S_time_x,S_time_ind(i,:),'Color',color(i,:),'LineWidth',4)
+		end
+		plot(S_time_x,S_time_ind_sum,'Color','k','LineWidth',5)
+		legend([name_comp;{'Sum of all comparisons'}])
+		axis([xmin xmax 0 max(S_time)])
+		xlabel('Age (Ma)')
+		ylabel('Similarity')
+		
 		figure
 		hold on
-		rectangle('Position',[200,-60,100,80],'FaceColor','y','EdgeColor','w') % Pangea
-		rectangle('Position',[480,-60,190,80],'FaceColor','y','EdgeColor','w') % Gondwana
-		rectangle('Position',[900,-60,400,80],'FaceColor','y','EdgeColor','w') % Rodinia
-		rectangle('Position',[1450,-60,525,80],'FaceColor','y','EdgeColor','w') % Columbia/Nuna
-		rectangle('Position',[2400,-60,300,80],'FaceColor','y','EdgeColor','w') % Kenorland?
+		rectangle('Position',[200,-60,100,80],'FaceColor','y','EdgeColor','w') % 300 to 200 Ma Pangea (Evans et al., 2016)
+		rectangle('Position',[300,-60,280,80],'FaceColor','y','EdgeColor','w') % 580 to 300 Ma Pannotia/Gondwana (Evans et al., 2016)
+		rectangle('Position',[750,-60,150,80],'FaceColor','y','EdgeColor','w') % 900 to 750 Ma Rodinia (Evans et al., 2016)
+		rectangle('Position',[1350,-60,200,80],'FaceColor','y','EdgeColor','w') % Nuna 1550 to 1350 Ma (Evans et al., 2016)
+		rectangle('Position',[2100,-60,400,80],'FaceColor','y','EdgeColor','w') % Kenorland 2500 to 2100 Ma (Evans et al., 2016)
 		plot(S_time_x, S_time, 'LineWidth', 4, 'Color', 'k')
 		xlabel('Age Ma')
 		ylabel('Sum of all comparisons')
@@ -263,9 +251,6 @@ Disc_Bins_Perc = Disc_Bins./repmat(Disc_Bins_Sum,1,N).*100;
 
 disc = Disc_Bins_Perc/100;
 
-
-
-
 for k = 1:N
 	data2 = data1(:,k*2-1:k*2);
 	data2 = data2(any(data2 ~= 0,2),:);
@@ -273,25 +258,6 @@ for k = 1:N
 	density1(:,:,k) = density1(:,:,k)./sum(sum(density1(:,:,k)));
 	clear data2
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 for i = 1:N
 	Disc_Bins_Cumu(:,i) = sum(Disc_Bins_Perc(:,1:i),2);
@@ -314,116 +280,3 @@ while(1)
 	end
 	break
 end
-
-
-%{
-
-for i = 1:N
-	density1_scaled(:,:,i) = density1(:,:,1).*disc(:,i)';
-end
-
-
-
-
-% Ask user if they want to plot all input sample bivariate KDEs?
-while(1)
-	choice = menu('Plot all samples SCALED?','Yes','No');
-	if choice==1 
-		for i = 1:N
-			figure
-			surf(X1,Y1,density1_scaled(:,:,i));
-			colormap(cmap)
-			shading interp
-			view(2)
-			title(Name(i,1))
-			axis([xmin xmax ymin ymax])
-		end
-	end
-	break
-end
-
-% Calculate intersample 2D Similarity SCALED
-%for i = 1:(N*N-N)/2 % number of comparisons
-count = 1;
-for j = 1:N
-	for k = 1:N
-		if j > k
-			for m = 1:size(density1_scaled,1)
-				for n = 1:size(density1_scaled,2)
-					Similarity_Maps_Scaled(m,n,count) = sqrt(density1_scaled(m,n,j).*density1_scaled(m,n,k)); % Similarity map
-				end
-			end
-			%name_comp(count,1) = strcat(Name(j,1), {' vs '}, Name(k,1));
-			count = count + 1;
-		end
-	end
-end
-
-% Ask user if they want to plot all of the Similarity comparison maps
-while(1)
-	choice = menu('Plot all comparisons SCALED?', 'Yes','No');
-	if choice==1 
-		for i = 1:(N*N-N)/2 % number of comparisons
-			figure
-			surf(X1,Y1,Similarity_Maps_Scaled(:,:,i));
-			colormap(cmap)
-			shading interp
-			view(2)
-			title(name_comp(i,1))
-			axis([xmin xmax ymin ymax])
-		end
-	end
-	break
-end
-
-for i = 1:N
-	S_scaled(i,1) = sum(Similarity_Maps_Scaled(:,:,i),'all');
-end
-
-S_Map_scaled = sum(Similarity_Maps_Scaled,3);
-
-% Ask user if they want to plot the Similarity sum 
-while(1)
-	choice = menu('Plot the sum of the comparisons SCALED?', 'Yes','No');
-	if choice==1 
-		figure
-		surf(X1,Y1,S_Map_scaled);
-		colormap(cmap)
-		shading interp
-		view(2)
-		title('Similarity Sum')
-		axis([xmin xmax ymin ymax])
-	end
-	break
-end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-%}
-
-
-
-
-
-
-
-
-
-
-
-
-
