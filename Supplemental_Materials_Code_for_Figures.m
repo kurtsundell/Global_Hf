@@ -1,4 +1,4 @@
-% Supporting code for Sundell and Macdonald (submitted) Geology for 2D KDE
+% Supporting code for Sundell and Macdonald (submitted) for 2D KDE
 % similarity comparison of global age-Hf data, or any other 2D data 
 
 clear all
